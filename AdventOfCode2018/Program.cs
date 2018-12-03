@@ -1,6 +1,7 @@
 ﻿using AdventOfCode2018.Day;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +12,11 @@ namespace AdventOfCode2018
     {
         static void Main(string[] args)
         {
-            Day1 day = new Day1();
-            int frequenzy = day.GetResultingFrequenzy();
-            Console.WriteLine(frequenzy);
+            string path = Path.Combine(Path.GetFullPath(@"..\..\"), "Inputs");
 
+            //Day1 day1 = new Day1(path);
+            //Day2 day2 = new Day2(path);
+            Day3 day3 = new Day3(path);
             Console.ReadLine();
         }
     }
