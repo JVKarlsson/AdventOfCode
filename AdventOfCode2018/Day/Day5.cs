@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -8,7 +7,6 @@ namespace AdventOfCode2018.Day
 {
     class Day5
     {
-
         public Day5()
         {
             var input = File.ReadAllText("InputDay5.txt");
@@ -25,11 +23,10 @@ namespace AdventOfCode2018.Day
         public int PartTwo()
         {
             var occurance = File.ReadAllText("InputDay5.txt").ToUpper().Distinct().ToList();
-
             var listcounter = new List<int>();
             foreach (var o in occurance)
             {
-                var lines = File.ReadAllText("InputDay5.txt").Replace(char.ToLower(o).ToString(), "").Replace(char.ToUpper(o).ToString(), "").ToList();
+                var lines = File.ReadAllText("InputDay5.txt").Replace(char.ToLower(o).ToString(),null).Replace(char.ToUpper(o).ToString(),null).ToList();
                 int count = GetPolymerCountFromList(lines);
                 listcounter.Add(count);
             }
