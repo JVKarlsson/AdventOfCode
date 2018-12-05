@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode2018.Day
 {
@@ -12,6 +11,7 @@ namespace AdventOfCode2018.Day
 
         public Day5()
         {
+            var input = File.ReadAllText("InputDay5.txt");
             Console.WriteLine("Advent of Code Day 5 part 1 : Polymer length " + PartOne());
             Console.WriteLine("Advent of Code Day 5 part 2 : Shortest polymer length " + PartTwo());
         }
@@ -22,12 +22,10 @@ namespace AdventOfCode2018.Day
             return GetPolymerCountFromList(lines);
         }
 
-
-
         public int PartTwo()
         {
             var occurance = File.ReadAllText("InputDay5.txt").ToUpper().Distinct().ToList();
-        
+
             var listcounter = new List<int>();
             foreach (var o in occurance)
             {
@@ -42,11 +40,7 @@ namespace AdventOfCode2018.Day
         {
             for (int i = 0; i < (lines.Count - 1);)
             {
-                if (lines[i] == lines[i + 1])
-                {
-                    i++;
-                }
-                else if (char.ToLower(lines[i]) == char.ToLower(lines[i + 1]))
+                if (!(lines[i] == lines[i + 1]) && (char.ToLower(lines[i]) == char.ToLower(lines[i + 1])))
                 {
                     lines.RemoveAt(i + 1);
                     lines.RemoveAt(i);
@@ -54,11 +48,8 @@ namespace AdventOfCode2018.Day
                         i--;
                 }
                 else
-                {
                     i++;
-                }
             }
-
             return lines.Count();
         }
     }
