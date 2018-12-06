@@ -9,7 +9,6 @@ namespace AdventOfCode2018.Day
     {
         public Day5()
         {
-            var input = File.ReadAllText("InputDay5.txt");
             Console.WriteLine("Advent of Code Day 5 part 1 : Polymer length " + PartOne());
             Console.WriteLine("Advent of Code Day 5 part 2 : Shortest polymer length " + PartTwo());
         }

@@ -18,7 +18,8 @@ namespace AdventOfCode2018
             //Day2 day2 = new Day2(path);
             //Day3 day3 = new Day3(path);
             //Day4 day4 = new Day4(path);
-            Day5 day5 = new Day5();
+            //Day5 day5 = new Day5();
+            Day6 day6 = new Day6();
             Console.ReadLine();
         }
     }
