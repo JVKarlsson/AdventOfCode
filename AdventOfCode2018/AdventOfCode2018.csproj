@@ -49,6 +49,7 @@
     <Compile Include="Day\Day4.cs" />
     <Compile Include="Day\Day5.cs" />
     <Compile Include="Day\Day6.cs" />
+    <Compile Include="Day\Day7.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -60,6 +61,9 @@
     <Content Include="Inputs\InputDay2.txt" />
     <Content Include="Inputs\InputDay3.txt" />
     <Content Include="Inputs\InputDay4.txt" />
+    <Content Include="Inputs\InputDay5.txt" />
+    <Content Include="Inputs\InputDay6.txt" />
+    <Content Include="Inputs\InputDay7.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

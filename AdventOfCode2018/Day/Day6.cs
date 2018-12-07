@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode2018.Day
 {
     class Day6
     {
-        public Day6()
+        private static string path = "";
+        public Day6(string p)
         {
+            path = Path.Combine(p, "InputDay6.txt");
             var solution = Solve();
             Console.WriteLine("Advent of Code Day 6 part 1 : " + solution[0]);
             Console.WriteLine("Advent of Code Day 6 part 2 : " + solution[1]);
@@ -20,7 +20,7 @@ namespace AdventOfCode2018.Day
         {
             var count = 0;
             var area = 0;
-            var lines = File.ReadAllLines("InputDay6.txt").ToList();
+            var lines = File.ReadAllLines(path).ToList();
             var Nodes = new List<coordinate>();
             var max = new int[2];
 

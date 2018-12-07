@@ -7,25 +7,27 @@ namespace AdventOfCode2018.Day
 {
     class Day5
     {
-        public Day5()
+        private static string path = "";
+        public Day5(string p)
         {
+            path = Path.Combine(p, "InputDay5.txt");
             Console.WriteLine("Advent of Code Day 5 part 1 : Polymer length " + PartOne());
             Console.WriteLine("Advent of Code Day 5 part 2 : Shortest polymer length " + PartTwo());
         }
 
         public int PartOne()
         {
-            List<char> lines = File.ReadAllText("InputDay5.txt").ToList();
+            List<char> lines = File.ReadAllText(path).ToList();
             return GetPolymerCountFromList(lines);
         }
 
         public int PartTwo()
         {
-            var occurance = File.ReadAllText("InputDay5.txt").ToUpper().Distinct().ToList();
+            var occurance = File.ReadAllText(path).ToUpper().Distinct().ToList();
             var listcounter = new List<int>();
             foreach (var o in occurance)
             {
-                var lines = File.ReadAllText("InputDay5.txt").Replace(char.ToLower(o).ToString(),null).Replace(char.ToUpper(o).ToString(),null).ToList();
+                var lines = File.ReadAllText(path).Replace(char.ToLower(o).ToString(),null).Replace(char.ToUpper(o).ToString(),null).ToList();
                 int count = GetPolymerCountFromList(lines);
                 listcounter.Add(count);
             }
