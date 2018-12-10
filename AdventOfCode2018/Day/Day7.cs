@@ -116,10 +116,25 @@ namespace AdventOfCode2018.Day
             //    Nodes = OrderDictionary(Nodes);
             //}
 
-
-
+            // change time
             while (Nodes.Count > 0)
             {
+                foreach (var worker in Workers)
+                {
+                    if (worker.WorkItem == '-')
+                    {
+                        // problem with only trying to take the first one
+                        var parent = Nodes.First();
+                        var c = parent.Key;
+                        if (!(parent.Value.Parents.Count == 0) || Taken.Contains(parent.Key))
+                            break;
+                        worker.WorkItem = parent.Key;
+                        worker.TimeLeft = parent.Key;
+                        Taken.Add(parent.Key);
+                        Nodes.Remove(c);
+                    }
+                }
+
                 foreach (var worker in Workers)
                 {
                     if (worker.TimeLeft > 0)
@@ -130,20 +145,6 @@ namespace AdventOfCode2018.Day
                             Console.WriteLine("removing item "+ worker.WorkItem);
                             time += RemoveWorkItem(worker, Nodes);
                         }
-                    }
-                }
-
-                foreach (var worker in Workers)
-                {
-                    if (worker.WorkItem == '-')
-                    {
-                        var parent = Nodes.First();
-                        var c = parent.Key;
-                        if (!(parent.Value.Parents.Count == 0) || Taken.Contains(parent.Key))
-                            break;
-                        worker.WorkItem = parent.Key;
-                        worker.TimeLeft = parent.Key;
-                        Taken.Add(parent.Key);
                     }
                 }
             }

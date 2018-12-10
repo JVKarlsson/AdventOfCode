@@ -60,7 +60,10 @@ namespace AdventOfCode2018.Day
                         foreach (var light in lights)
                         {
                             if (light.Position[0] == x && light.Position[1] == y)
+                            {
                                 haveWritten = true;
+                                break;
+                            }
                         }
 
                         if (haveWritten)
