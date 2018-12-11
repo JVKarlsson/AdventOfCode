@@ -64,7 +64,6 @@ namespace AdventOfCode2018.Day
 
         private int PartTwo()
         {
-            var time = 0;
             var Nodes = new Dictionary<char, Node>();
             var Workers = new List<Worker>();
             var lines = File.ReadAllLines(path).ToList();
@@ -95,87 +94,55 @@ namespace AdventOfCode2018.Day
             }
             Nodes = OrderDictionary(Nodes);
 
-
-
-
-
-
-            //while (Nodes.Count > 0)
-            //{
-            //    var parent = Nodes.First();
-
-
-            //    foreach (var child in parent.Value.Children)
-            //    {
-            //        child.Parents.Remove(parent.Value);
-            //    }
-
-            //    order += (parent.Key);
-            //    Nodes.Remove(parent.Key);
-            //    Nodes = OrderDictionary(Nodes);
-            //}
-
-
-
-            var Taken = new List<char>();
-
-            // change time
+            var Taken = new Dictionary<char, Node>();
+            var time = 0;
             while (Nodes.Count > 0)
             {
+                time++;
                 foreach (var worker in Workers)
                 {
                     if (worker.WorkItem == '-')
                     {
-                        // problem with only trying to take the first one
-                        var parent = Nodes.First();
-                        var c = parent.Key;
-                        if (!(parent.Value.Parents.Count == 0) || Taken.Contains(parent.Key))
-                            break;
-                        worker.WorkItem = parent.Key;
-
-                        worker.TimeLeft = 60 + parent.Key; // fix so its the actual value
-                        Taken.Add(parent.Key);
-
-
-
-                        Nodes.Remove(c);
+                        foreach (var node in Nodes)
+                        {
+                            if (node.Value.Parents.Count == 0)
+                            {
+                                if (!(Taken.ContainsKey(node.Key)))
+                                {
+                                    Taken.Add(node.Key, node.Value);
+                                    worker.WorkItem = node.Key;
+                                    worker.TimeLeft = 60 + node.Key-64;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
                     }
                 }
 
                 foreach (var worker in Workers)
                 {
-                    if (worker.TimeLeft > 0)
+                    worker.TimeLeft--;
+                    if (worker.TimeLeft == 0)
                     {
-                        worker.TimeLeft--;
-                        if (worker.TimeLeft == 0)
+                        var n = Nodes[worker.WorkItem];
+                        foreach (var child in n.Children)
                         {
-                            Console.WriteLine("removing item "+ worker.WorkItem);
-                            RemoveWorkItem(worker, Nodes);
+                            child.Parents.Remove(n);
                         }
+
+                        Nodes.Remove(n.id);
+                        worker.WorkItem = '-';
+                        Nodes = OrderDictionary(Nodes);
                     }
                 }
             }
-
             return time;
         }
-
-
-        private void RemoveWorkItem(Worker worker, Dictionary<char, Node> Nodes)
-        {
-            var time = 60 + worker.WorkItem;
-
-            var parent = Nodes[worker.WorkItem];
-            foreach (var child in parent.Children)
-            {
-                child.Parents.Remove(parent);
-            }
-            Nodes.Remove(worker.WorkItem);
-            worker.WorkItem = '-';
-            Nodes = OrderDictionary(Nodes);
-        }
-
-
-
+        
         private Dictionary<char, Node> OrderDictionary(Dictionary<char, Node> Nodes)
         {
             var temp = new Dictionary<char, Node>();

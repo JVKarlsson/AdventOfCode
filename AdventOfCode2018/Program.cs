@@ -20,11 +20,11 @@ namespace AdventOfCode2018
             //var day4 = new Day4(path);
             //var day5 = new Day5(path);
             //var day6 = new Day6(path);
-            //var Day7 = new Day7(path);
+            var Day7 = new Day7(path);
             //var Day8 = new Day8(path);
             //var Day9 = new Day9(path);
             //var Day10 = new Day10(path);
-            var Day11 = new Day11();
+            //var Day11 = new Day11();
 
             Console.ReadLine();
         }
