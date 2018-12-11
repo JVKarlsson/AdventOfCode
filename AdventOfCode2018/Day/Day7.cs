@@ -67,7 +67,6 @@ namespace AdventOfCode2018.Day
             var time = 0;
             var Nodes = new Dictionary<char, Node>();
             var Workers = new List<Worker>();
-            var Taken = new List<char>();
             var lines = File.ReadAllLines(path).ToList();
 
 
@@ -116,6 +115,10 @@ namespace AdventOfCode2018.Day
             //    Nodes = OrderDictionary(Nodes);
             //}
 
+
+
+            var Taken = new List<char>();
+
             // change time
             while (Nodes.Count > 0)
             {
@@ -129,8 +132,12 @@ namespace AdventOfCode2018.Day
                         if (!(parent.Value.Parents.Count == 0) || Taken.Contains(parent.Key))
                             break;
                         worker.WorkItem = parent.Key;
-                        worker.TimeLeft = parent.Key;
+
+                        worker.TimeLeft = 60 + parent.Key; // fix so its the actual value
                         Taken.Add(parent.Key);
+
+
+
                         Nodes.Remove(c);
                     }
                 }
@@ -143,7 +150,7 @@ namespace AdventOfCode2018.Day
                         if (worker.TimeLeft == 0)
                         {
                             Console.WriteLine("removing item "+ worker.WorkItem);
-                            time += RemoveWorkItem(worker, Nodes);
+                            RemoveWorkItem(worker, Nodes);
                         }
                     }
                 }
@@ -153,7 +160,7 @@ namespace AdventOfCode2018.Day
         }
 
 
-        private int RemoveWorkItem(Worker worker, Dictionary<char, Node> Nodes)
+        private void RemoveWorkItem(Worker worker, Dictionary<char, Node> Nodes)
         {
             var time = 60 + worker.WorkItem;
 
@@ -165,7 +172,6 @@ namespace AdventOfCode2018.Day
             Nodes.Remove(worker.WorkItem);
             worker.WorkItem = '-';
             Nodes = OrderDictionary(Nodes);
-            return time;
         }
 
 
