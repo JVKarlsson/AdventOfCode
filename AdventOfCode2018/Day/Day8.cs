@@ -21,25 +21,31 @@ namespace AdventOfCode2018.Day
         {
             var tree = new Dictionary<int, List<string>>();
             var lines = File.ReadAllText(path).Split(' ').Select(x => Convert.ToInt32(x)).ToList();
-            
-            var part1 = recursiveSum(lines);
+
+            //var part1 = recursiveSum(lines);
+            //var totalSum = 0;
+            //foreach (var leaf in branches)
+            //{
+            //    totalSum += leaf.MetaDataSum;
+            //}
+
+
+            // DO AS IN part 1, 
+            var part1 = recursiveSum2(lines, 0);
             var totalSum = 0;
             foreach (var leaf in branches)
             {
                 totalSum += leaf.MetaDataSum;
             }
 
-            branches.Clear();
-            var part2 = recursiveSum2(lines);
-            var totalSumPart2 = 0;
-            foreach (var leaf in branches)
-            {
-                totalSumPart2 += leaf.MetaDataSum;
-            }
+            //branches.Clear();
+            //var part2 = recursiveSum2(lines, 0);
+            //var totalSumPart2 = part2[1];
 
-            Console.WriteLine("Advent of Code Day 8 part 1 : " + totalSum);
-            Console.WriteLine("Advent of Code Day 8 part 2 : " + totalSumPart2);
+            //Console.WriteLine("Advent of Code Day 8 part 1 : " + totalSum);
+            Console.WriteLine("Advent of Code Day 8 part 2 : " + totalSum);
         }
+
 
         public int recursiveSum(List<int> data)
         {
@@ -67,29 +73,33 @@ namespace AdventOfCode2018.Day
             return steps;
         }
 
-        public int[] recursiveSum2(List<int> data)
+        public int[] recursiveSum2(List<int> data, int depth)
         {
+            depth++;
             var steps = 0;
             var childCount = data.ElementAt(steps);
             var metaEntries = data.ElementAt(steps + 1);
             steps += 2;
-            var branch = new Branch(childCount, metaEntries);
+            var branch = new Branch(childCount, metaEntries, depth);
 
             if (childCount > 0)
             {
                 var dataList = new List<int[]>();
                 for (int i = 0; i < childCount; i++)
                 {
-                    var result = recursiveSum2(data.GetRange(steps, (data.Count - (steps + 1))));
+                    var result = recursiveSum2(data.GetRange(steps, (data.Count - (steps + 1))), depth);
+
+
                     dataList.Add(result);
                     steps += result[0];
                 }
+
                 for (int i = steps; i < (steps + metaEntries); i++)
                 {
                     var index = data.ElementAt(i);
                     if (index < childCount)
                     {
-                        branch.MetaDataSum += dataList.ElementAt(index-1)[1];
+                        branch.MetaDataSum += dataList.ElementAt(index - 1)[1];
                     }
                 }
             }
@@ -102,7 +112,7 @@ namespace AdventOfCode2018.Day
             }
             steps += metaEntries;
             branches.Add(branch);
-            return new int[] { steps , branch.MetaDataSum};
+            return new int[] { steps, branch.MetaDataSum };
         }
     }
 
@@ -111,9 +121,17 @@ namespace AdventOfCode2018.Day
         public int Children { get; set; }
         public int MetaEntries { get; set; }
         public int MetaDataSum { get; set; }
+        public int Depth { get; set; }
+        public List<int> childrenIndexes { get; set; }
+        public List<int> Metadata { get; set; }
 
-        public Branch(int children, int metaEntries)
+        public Branch(int children, int metaEntries, int depth)
         {
+            childrenIndexes = new List<int>();
+            Metadata = new List<int>();
+            Depth = depth;
+
+
             Children = children;
             MetaEntries = metaEntries;
             MetaDataSum = 0;
