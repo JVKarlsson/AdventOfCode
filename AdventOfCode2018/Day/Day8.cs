@@ -53,7 +53,7 @@ namespace AdventOfCode2018.Day
             var childCount = data.ElementAt(steps);
             var metaEntries = data.ElementAt(steps + 1);
             steps += 2;
-            var branch = new Branch(childCount, metaEntries);
+            var branch = new Branch(childCount, metaEntries, 0);
 
             if (childCount > 0)
             {
