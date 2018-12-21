@@ -22,13 +22,18 @@ namespace AdventOfCode2018
             //var day6 = new Day6(path);
             //var Day7 = new Day7(path);
             //var Day8 = new Day8(path);
-            //var Day9 = new Day9(path);
+            //var Day9 = new Day9();
             //var Day10 = new Day10(path);
-            //var Day12 = new Day12(path);
             //var Day11 = new Day11();
-
+            //var Day12 = new Day12(path);
+            //
+            //
             var Day15 = new Day15(path);
-
+            //
+            //
+            //
+            //
+            //
             Console.ReadLine();
         }
     }
