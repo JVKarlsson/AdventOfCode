@@ -8,25 +8,23 @@ namespace AdventOfCode2019.Day
 {
     class Day1
     {
-        private string path = "";
-        public Day1(string p)
+        private string _path = "";
+        public Day1(string path)
         {
-            path = Path.Combine(p, "InputDay1.txt");
-            var part1 = PartOne();
-            var part2 = PartTwo();
+            _path = Path.Combine(path, "InputDay1.txt");
             Console.WriteLine("Advent of Code Day 1 part 1 : Fuel Sum = " + PartOne());
             Console.WriteLine("Advent of Code Day 1 part 2 : Fuel Sum = " + PartTwo());
         }
 
         private int PartOne()
         {
-            var sum = File.ReadAllLines(path).ToList().Sum(x => (int.Parse(x) / 3) - 2);
+            var sum = File.ReadAllLines(_path).ToList().Sum(x => (int.Parse(x) / 3) - 2);
             return sum;
         }
 
         private int PartTwo()
         {
-            var sum = File.ReadAllLines(path).ToList().Sum(x => GetFuelAndSubFuel(int.Parse(x)));
+            var sum = File.ReadAllLines(_path).ToList().Sum(x => GetFuelAndSubFuel(int.Parse(x)));
             return sum;
         }
 
