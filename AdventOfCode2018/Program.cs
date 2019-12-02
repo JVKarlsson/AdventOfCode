@@ -28,12 +28,27 @@ namespace AdventOfCode2018
             //var Day12 = new Day12(path);
             //
             //
-            var Day15 = new Day15(path);
+            //var Day15 = new Day15(path);
             //
             //
             //
             //
             //
+
+
+            var attributes = File.ReadAllLines(@"C:\Users\jimmy.karlsson\Desktop\SitskortResponse.txt").ToArray();
+            var list = new List<string>();
+            foreach (var attribute in attributes)
+            {
+                if (attribute.ToUpper().Contains(("FriendlyName=\"employeeHsaId\"").ToUpper()))
+                {
+                    var value = attribute.Split(new string[] { "<saml:AttributeValue>" }, StringSplitOptions.None).ElementAt(1).Substring(0,26);
+                    list.Add(value);
+                }
+            }
+            var HsaId = list.Single();
+            Console.WriteLine(HsaId);
+
             Console.ReadLine();
         }
     }
