@@ -8,7 +8,7 @@ namespace AdventOfCode2019.Day
     class Day5
     {
         private string _path = "";
-        private int _output = 1;
+        private List<int> _output = new List<int>();
 
         public Day5(string path)
         {
@@ -28,12 +28,14 @@ namespace AdventOfCode2019.Day
             throw new NotImplementedException();
         }
 
-        private int RunCode(List<int> codeList)
+        private List<int> RunCode(List<int> codeList)
         {
             var numOfinstructions = 4;
             for (int i = 0; i < codeList.Count;)
             {
-
+                var a = 1;
+                var b = 1;
+                var c = 1;
                 switch (codeList[i])
                 {
                     case 1:
@@ -47,9 +49,10 @@ namespace AdventOfCode2019.Day
                         break;
                     case 4:
                         numOfinstructions = 2;
+                        _output.Add(codeList[codeList[i +1]]);
                         break;
                     case 99:
-                        return codeList[0];
+                        //return codeList[0];
                     default:
                         // handle parameter mode
                         break;
@@ -57,7 +60,7 @@ namespace AdventOfCode2019.Day
 
                 i += numOfinstructions;
             }
-            return codeList[0];
+            return _output;
         }
 
         private void RunCommand(List<int> codeList, int pointer)
@@ -77,7 +80,7 @@ namespace AdventOfCode2019.Day
                     //numOfinstructions = 2;
                     break;
                 case 99:
-                    return codeList[0];
+                    //return codeList[0]/*;*/
                 default:
                     // handle parameter mode
                     break;
