@@ -13,7 +13,8 @@ namespace AdventOfCode2019
             //_ = new Day2(path);
             //_ = new Day3(path);
             //_ = new Day4(path);
-            _ = new Day5(path);
+            //_ = new Day5(path);
+            _ = new Day6(path);
 
             Console.ReadLine();
         }
