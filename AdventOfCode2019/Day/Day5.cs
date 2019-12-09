@@ -8,80 +8,95 @@ namespace AdventOfCode2019.Day
     class Day5
     {
         private string _path = "";
-        private int _output = 1;
 
         public Day5(string path)
         {
-            _path = System.IO.Path.Combine(path, "InputDay4.txt");
-            Console.WriteLine("Advent of Code Day 5 part 1 : diagnostic code = " + PartOne());
-            Console.WriteLine("Advent of Code Day 5 part 2 : diagnostic code = " + PartTwo());
+            _path = System.IO.Path.Combine(path, "InputDay5.txt");
+            var result = "";
+            PartOne().ForEach(x => result += $"{x.ToString()} ");
+            Console.WriteLine("Advent of Code Day 5 part 1 : diagnostic code = " + result);
+
+            PartTwo().ForEach(x => result += $"{x.ToString()} ");
+            Console.WriteLine("Advent of Code Day 5 part 2 : diagnostic code = " + result);
         }
 
-        private string PartOne()
+        private List<int> PartOne()
         {
-            var lines = System.IO.File.ReadAllText(_path).Split(",").Select(x => int.Parse(x)).ToList(); ;
-            throw new NotImplementedException();
+            var lines = System.IO.File.ReadAllText(_path).Split(",").Select(x => int.Parse(x)).ToArray();
+            return RunCode(lines, 1);
         }
 
-        private string PartTwo()
+        private List<int> PartTwo()
         {
-            throw new NotImplementedException();
+            var lines = System.IO.File.ReadAllText(_path).Split(",").Select(x => int.Parse(x)).ToArray();
+            return RunCode(lines, 5);
         }
 
-        private int RunCode(List<int> codeList)
+        private List<int> RunCode(int[] codeList, int input)
         {
-            var numOfinstructions = 4;
-            for (int i = 0; i < codeList.Count;)
+            var output = new List<int>();
+            var index = 0;
+            while (codeList[index] != 99)
             {
+                int num = codeList[index];
+                int opcode = (num % 10);
 
-                switch (codeList[i])
+                switch (opcode)
                 {
-                    case 1:
-                        codeList[codeList[i + 3]] = codeList[codeList[i + 1]] + codeList[codeList[i + 2]];
-                        break;
-                    case 2:
-                        codeList[codeList[i + 3]] = codeList[codeList[i + 1]] * codeList[codeList[i + 2]];
-                        break;
                     case 3:
-                        numOfinstructions = 2;
+                        codeList[codeList[index + 1]] = input;
+                        index += 2;
                         break;
                     case 4:
-                        numOfinstructions = 2;
+                        output.Add(codeList[codeList[index + 1]]);
+                        index += 2;
                         break;
-                    case 99:
-                        return codeList[0];
                     default:
-                        // handle parameter mode
+                        int param1Mode = (num / 100) % 10;
+                        int param2Mode = (num / 1000) % 10;
+
+                        int addr1 = codeList[index + 1];
+                        int addr2 = codeList[index + 2];
+
+                        int param1 = (param1Mode == 1) ? addr1 : codeList[addr1];
+                        int param2 = (param2Mode == 1) ? addr2 : codeList[addr2];
+
+
+                        if (opcode != 5 && opcode != 6)
+                        {
+                            int varAddr = codeList[index + 3];
+                            int result = HandleOpCode(opcode, param1, param2);
+
+                            codeList[varAddr] = result;
+                            index += 4;
+                        }
+                        else
+                        {
+                            index = ShouldJump(opcode, param1) ? param2 : (index + 3);
+                        }
+
+
                         break;
                 }
-
-                i += numOfinstructions;
             }
-            return codeList[0];
+            return output;
         }
 
-        private void RunCommand(List<int> codeList, int pointer)
+        static int HandleOpCode(int opCode, int value1, int value2)
         {
-            switch (codeList[pointer])
-            {
-                case 1:
-                    codeList[codeList[pointer + 3]] = codeList[codeList[pointer + 1]] + codeList[codeList[pointer + 2]];
-                    break;
-                case 2:
-                    codeList[codeList[pointer + 3]] = codeList[codeList[pointer + 1]] * codeList[codeList[pointer + 2]];
-                    break;
-                case 3:
-                    //numOfinstructions = 2;
-                    break;
-                case 4:
-                    //numOfinstructions = 2;
-                    break;
-                case 99:
-                    return codeList[0];
-                default:
-                    // handle parameter mode
-                    break;
-            }
+            if (opCode == 1) return (value1 + value2);
+            if (opCode == 2) return (value1 * value2);
+            if (opCode == 7) return (value1 < value2) ? 1 : 0;
+            if (opCode == 8) return (value1 == value2) ? 1 : 0;
+            throw new ArgumentException("Invalid opcode passed: " + opCode);
+        }
+
+        static bool ShouldJump(int opCode, int value)
+        {
+            if (opCode == 5) return value != 0;
+            if (opCode == 6) return value == 0;
+
+            return false;
         }
     }
 }

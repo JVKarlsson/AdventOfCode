@@ -11,8 +11,9 @@ namespace AdventOfCode2019
             string path = Path.Combine(Path.GetFullPath(@"..\..\..\"), "Inputs");
             //_ = new Day1(path);
             //_ = new Day2(path);
-            _ = new Day3(path);
+            //_ = new Day3(path);
             //_ = new Day4(path);
+            _ = new Day5(path);
 
             Console.ReadLine();
         }
