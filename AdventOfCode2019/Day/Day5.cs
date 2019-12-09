@@ -15,7 +15,7 @@ namespace AdventOfCode2019.Day
             var result = "";
             PartOne().ForEach(x => result += $"{x.ToString()} ");
             Console.WriteLine("Advent of Code Day 5 part 1 : diagnostic code = " + result);
-
+            result = "";
             PartTwo().ForEach(x => result += $"{x.ToString()} ");
             Console.WriteLine("Advent of Code Day 5 part 2 : diagnostic code = " + result);
         }
@@ -52,51 +52,42 @@ namespace AdventOfCode2019.Day
                         index += 2;
                         break;
                     default:
-                        int param1Mode = (num / 100) % 10;
-                        int param2Mode = (num / 1000) % 10;
 
-                        int addr1 = codeList[index + 1];
-                        int addr2 = codeList[index + 2];
+                        var firstAddress = codeList[index + 1];
+                        var secondAddress = codeList[index + 2];
 
-                        int param1 = (param1Mode == 1) ? addr1 : codeList[addr1];
-                        int param2 = (param2Mode == 1) ? addr2 : codeList[addr2];
+                        var firstValue = ((num / 100) % 10) == 1 ? firstAddress : codeList[firstAddress];
+                        var secondValue = (((num / 1000) % 10) == 1) ? secondAddress : codeList[secondAddress];
 
-
-                        if (opcode != 5 && opcode != 6)
+                        var result = HandleOpCode(opcode, firstValue, secondValue, index);
+                        
+                        if (opcode == 5 || opcode == 6)
                         {
-                            int varAddr = codeList[index + 3];
-                            int result = HandleOpCode(opcode, param1, param2);
-
-                            codeList[varAddr] = result;
-                            index += 4;
+                            index = result;
                         }
                         else
                         {
-                            index = ShouldJump(opcode, param1) ? param2 : (index + 3);
+                            codeList[codeList[index + 3]] = result;
+                            index += 4;
                         }
-
-
                         break;
                 }
             }
             return output;
         }
 
-        static int HandleOpCode(int opCode, int value1, int value2)
-        {
-            if (opCode == 1) return (value1 + value2);
-            if (opCode == 2) return (value1 * value2);
-            if (opCode == 7) return (value1 < value2) ? 1 : 0;
-            if (opCode == 8) return (value1 == value2) ? 1 : 0;
-            throw new ArgumentException("Invalid opcode passed: " + opCode);
-        }
+        static int HandleOpCode(int opCode, int value1, int value2, int index) =>
+            opCode switch
+            {
+                1 => value1 + value2,
+                2 => value1 * value2,
+                7 => (value1 < value2) ? 1 : 0,
+                8 => (value1 == value2) ? 1 : 0,
 
-        static bool ShouldJump(int opCode, int value)
-        {
-            if (opCode == 5) return value != 0;
-            if (opCode == 6) return value == 0;
+                5 => (value1 != 0) ? value2 : (index + 3),
+                6 => (value1 == 0) ? value2 : (index + 3),
 
-            return false;
-        }
+                _ => throw new ArgumentException("Invalid opcode passed: " + opCode)
+            };
     }
 }
