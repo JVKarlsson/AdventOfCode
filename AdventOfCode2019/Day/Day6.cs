@@ -20,48 +20,54 @@ namespace AdventOfCode2019.Day
         private int PartOne()
         {
             var list = File.ReadAllLines(_path).ToList();
-            //var test = new List<string> { "COM)B", "B)C", "C)D", "D)E", "E)F", "B)G", "G)H", "D)I", "E)J", "J)K", "K)L" };
+            var nodeDictionary = new Dictionary<string, Node>();
 
-            var objects = new Dictionary<string, Node>();
             foreach (var item in list)
             {
                 var nodes = item.Split(")");
                 var targetNode = new Node(nodes[0], null);
-                var orbiter = new Node(nodes[1], targetNode);
+                var orbiterNode = new Node(nodes[1], targetNode);
 
-                _ = objects.TryAdd(targetNode.Name, targetNode);
-                _ = objects.TryAdd(orbiter.Name, orbiter);
-                objects[orbiter.Name].Orbiting = objects[targetNode.Name];
+                _ = nodeDictionary.TryAdd(targetNode.Name, targetNode);
+                if (!nodeDictionary.TryAdd(orbiterNode.Name, orbiterNode))
+                {
+                    nodeDictionary[orbiterNode.Name].Orbiting = nodeDictionary[targetNode.Name];
+                }
+                //nodeDictionary.TryAdd(orbiterNode.Name, orbiterNode);
+
             }
 
-            var sum = objects.Sum(x => x.Value.OrbitCount);
+            var sum = nodeDictionary.Sum(x => x.Value.OrbitCount);
             return sum;
         }
 
         private int PartTwo()
         {
             var list = File.ReadAllLines(_path).ToList();
-            //var test = new List<string> { "COM)B","B)C","C)D","D)E","E)F","B)G","G)H","D)I","E)J","J)K","K)L","K)YOU","I)SAN"};
-            var objects = new Dictionary<string, Node>();
+            var nodeDictionary = new Dictionary<string, Node>();
             foreach (var item in list)
             {
                 var nodes = item.Split(")");
                 var targetNode = new Node(nodes[0], null);
-                var orbiter = new Node(nodes[1], targetNode);
+                var orbiterNode = new Node(nodes[1], targetNode);
 
-                _ = objects.TryAdd(targetNode.Name, targetNode);
-                _ = objects.TryAdd(orbiter.Name, orbiter);
-                objects[orbiter.Name].Orbiting = objects[targetNode.Name];
+                _ = nodeDictionary.TryAdd(targetNode.Name, targetNode);
+                _ = nodeDictionary.TryAdd(orbiterNode.Name, orbiterNode);
+
+                nodeDictionary[orbiterNode.Name].Orbiting = nodeDictionary[targetNode.Name];
             }
 
+            // Del 2
             Node meetup = null;
-            var pointer = objects["YOU"];
+
+            var pointer = nodeDictionary["YOU"];
             while (pointer.Orbiting != null)
             {
                 pointer = pointer.Orbiting;
                 pointer.Visited = true;
             }
-            pointer = objects["SAN"];
+
+            pointer = nodeDictionary["SAN"];
             while (pointer.Orbiting != null)
             {
                 pointer = pointer.Orbiting;
@@ -72,7 +78,16 @@ namespace AdventOfCode2019.Day
                 }
             }
 
-            var sum = objects["YOU"].OrbitCount + objects["SAN"].OrbitCount - (2 * meetup.OrbitCount) - 2;
+            var sum = 
+                nodeDictionary["YOU"].OrbitCount 
+                + nodeDictionary["SAN"].OrbitCount 
+
+                // ta bort distansen från mötesplatsen till COM och multplicera med 2 (YOU + SAN)
+                - (2 * meetup.OrbitCount)
+
+                // "Between the objects they are orbiting - not between YOU and SAN"
+                - 2;
+
             return sum;
         }
     }
@@ -81,7 +96,10 @@ namespace AdventOfCode2019.Day
     {
         public Node Orbiting;
         public string Name;
+
+        // Del 2 property
         public bool Visited { get; set; } = false;
+
         public Node(string name, Node orbiting)
         {
             Name = name;

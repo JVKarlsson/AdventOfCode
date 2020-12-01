@@ -38,8 +38,8 @@ namespace AdventOfCode2019.Day
             var index = 0;
             while (codeList[index] != 99)
             {
-                int num = codeList[index];
-                int opcode = (num % 10);
+                var value = codeList[index];
+                var opcode = (value % 10);
 
                 switch (opcode)
                 {
@@ -51,13 +51,15 @@ namespace AdventOfCode2019.Day
                         output.Add(codeList[codeList[index + 1]]);
                         index += 2;
                         break;
+                    case 99:
+                        break;
                     default:
 
                         var firstAddress = codeList[index + 1];
                         var secondAddress = codeList[index + 2];
 
-                        var firstValue = ((num / 100) % 10) == 1 ? firstAddress : codeList[firstAddress];
-                        var secondValue = (((num / 1000) % 10) == 1) ? secondAddress : codeList[secondAddress];
+                        var firstValue = ((value / 100) % 10) == 1 ? firstAddress : codeList[firstAddress];
+                        var secondValue = (((value / 1000) % 10) == 1) ? secondAddress : codeList[secondAddress];
 
                         var result = HandleOpCode(opcode, firstValue, secondValue, index);
                         
