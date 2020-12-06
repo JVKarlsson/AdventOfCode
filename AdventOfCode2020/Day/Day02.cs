@@ -14,7 +14,7 @@ namespace AdventOfCode2020.Day
         public Day02(string path)
         {
             _path = Path.Combine(path, "InputDay02.txt"); ;
-            //PartOne();
+            PartOne();
             PartTwo();
         }
 
