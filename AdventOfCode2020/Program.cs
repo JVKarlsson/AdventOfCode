@@ -10,6 +10,7 @@ string path = Path.Combine(Path.GetFullPath(@"..\..\..\"), "Inputs");
 //_ = new Day04(path);
 //_ = new Day05(path);
 //_ = new Day06(path);
+//_ = new Day06(path);
 //_ = new Day07(path);
 //_ = new Day08(path);
 //_ = new Day09(path);
@@ -17,4 +18,6 @@ string path = Path.Combine(Path.GetFullPath(@"..\..\..\"), "Inputs");
 _ = new Day11(path);
 
 
+//_ = new Day12(path);
+_ = new Day13(path);
 Console.ReadLine();
