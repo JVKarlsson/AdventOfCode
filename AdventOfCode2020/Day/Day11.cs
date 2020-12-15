@@ -80,19 +80,8 @@ namespace AdventOfCode2020.Day
             return sum;
         }
 
-
-
-
-
-
-
-
-
-
         private bool MovePeople2(Node[][] nodes)
         {
-            //char[][] copy = nodes.Select(x => x.Select(y => y).ToArray()).ToArray();
-
             for (int x = 0; x < nodes.Length; x++)
             {
                 for (int y = 0; y < nodes[x].Length; y++)
@@ -112,7 +101,6 @@ namespace AdventOfCode2020.Day
             }
             var asd = nodes.Select(x => x.Where(y => y.SwapType()).Count()).Sum();
             return asd > 0;
-            //return nodes.Any(x => x.Select(y => y.SwapType()));
         }
     }
 

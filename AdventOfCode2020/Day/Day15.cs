@@ -50,11 +50,11 @@ namespace AdventOfCode2020.Day
             {
                 numbers.Add(input[i], (0, i + 1));
             }
-            //numbers.TryAdd(0, (input.Count() + 1, 0));
 
             int latest = input.Last();
             for (int i = input.Count+1; i <= 30000000; i++)
             {
+                // Assign latest
                 if (numbers.ContainsKey(latest))
                 {
                     var indexes = numbers[latest];
@@ -68,8 +68,7 @@ namespace AdventOfCode2020.Day
                     latest = 0;
                 }
 
-
-
+                // Update latest
                 if (numbers.ContainsKey(latest))
                 {
                     var indexes = numbers[latest];

@@ -19,6 +19,8 @@ string path = Path.Combine(Path.GetFullPath(@"..\..\..\"), "Inputs");
 //_ = new Day12(path);
 //_ = new Day13(path);
 //_ = new Day14(path);
-_ = new Day15(path);
+//_ = new Day15(path);
+//_ = new Day15(path);
+_ = new Day16(path);
 
 Console.ReadLine();
