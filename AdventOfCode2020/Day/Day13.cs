@@ -26,7 +26,7 @@ namespace AdventOfCode2020.Day
             var minimum = input[1].Replace("x,", "")
                                       .Split(",")
                                       .Select(x => int.Parse(x))
-                                      .Select(Id => (Id, Wait : Id - (time % Id)))
+                                      .Select(Id => (Id, Wait: Id - (time % Id)))
                                       .OrderBy(x => x.Wait)
                                       .Select(x => x.Id * x.Wait)
                                       .First();
@@ -39,24 +39,22 @@ namespace AdventOfCode2020.Day
             var input = File.ReadAllLines(_path)[1].Replace("x,", "1,").Split(",")
                 .Select(x => long.Parse(x)).ToArray();
 
-
-            bool asd = true;
-            var start = input[0];
-            var multiple = 0;
-            var values = input[1..];
-            while(asd)
+            long starttime = 0;
+            long step = input[0];
+            for (int i = 1; i < input.Length; i++)
             {
-                multiple++;
-                var compare = start * multiple;
-                var modulus = input.Select((x, i) => (compare + i) % x == 0).ToArray();
-
-                if (!modulus.Any(x => !x))
+                while (true && input[i] != 1)
                 {
-                    asd = false;
+                    starttime += step;
+                    var modulus = (starttime + i) % input[i] == 0;
+                    if (modulus)
+                    {
+                        step *= input[i];
+                        break;
+                    }
                 }
             }
-            var test = start * multiple;
-            Console.WriteLine($"Advent of Code Day 13 part 2 : {0}");
+            Console.WriteLine($"Advent of Code Day 13 part 2 : {starttime}");
         }
     }
 }

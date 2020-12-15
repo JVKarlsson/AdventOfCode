@@ -19,5 +19,6 @@ _ = new Day11(path);
 
 
 //_ = new Day12(path);
-_ = new Day13(path);
+//_ = new Day13(path);
+_ = new Day14(path);
 Console.ReadLine();
