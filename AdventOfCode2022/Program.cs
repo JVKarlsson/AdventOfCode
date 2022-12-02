@@ -8,7 +8,8 @@ namespace AdventOfCode2022
         {
             string path = Path.Combine(Path.GetFullPath(@"..\..\..\"), "Inputs");
 
-            _ = new Day01(path);
+            //_ = new Day01(path);
+            _ = new Day02(path);
 
             Console.ReadLine();
         }
