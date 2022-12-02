@@ -10,6 +10,7 @@ namespace AdventOfCode2022
 
             //_ = new Day01(path);
             _ = new Day02(path);
+            //_ = new Day03(path);
 
             Console.ReadLine();
         }
