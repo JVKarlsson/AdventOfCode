@@ -17,15 +17,9 @@ namespace AdventOfCode2022.Day
         }
         public void PartOne()
         {
-            var test = File.ReadAllLines(_path);
-            var test2 = test.Partition(test.Length / 2).ToList();
-            var first = test2[0];
-            var second = test2[1];
-
             var result = File.ReadAllLines(_path)
                 .Select( x =>
                 {
-                    // If multiple values can be found, replace first with select.
                     var first = x[..(x.Length / 2)];
                     var second = x[(x.Length / 2)..];
                     var intersects = first.Intersect(second).First();
@@ -38,10 +32,9 @@ namespace AdventOfCode2022.Day
         public void PartTwo()
         {
             var result = File.ReadAllLines(_path)
-                .Partition(3)
+                .Chunk(3)
                 .Select(x =>
                 {
-                    // If multiple values can be found, replace first with select.
                     var intersects = x[0].Intersect(x[1]).Intersect(x[2]).First();
                     return Char.IsUpper(intersects) ? intersects - (64 - 26) : intersects - 96;
                 })
