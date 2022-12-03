@@ -26,8 +26,8 @@ namespace AdventOfCode2022.Day
                 .Select( x =>
                 {
                     // If multiple values can be found, replace first with select.
-                    var first = x.Substring(0, x.Length / 2);
-                    var second = x.Substring(x.Length / 2);
+                    var first = x[..(x.Length / 2)];
+                    var second = x[(x.Length / 2)..];
                     var intersects = first.Intersect(second).First();
                     return Char.IsUpper(intersects) ? intersects - (64 - 26) : intersects - 96;
                 })
