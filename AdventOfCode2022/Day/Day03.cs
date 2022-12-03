@@ -42,7 +42,7 @@ namespace AdventOfCode2022.Day
                 .Select(x =>
                 {
                     // If multiple values can be found, replace first with select.
-                    var intersects = x[0].Intersect(x[1]).Intersect(x[2]).ToArray().First();
+                    var intersects = x[0].Intersect(x[1]).Intersect(x[2]).First();
                     return Char.IsUpper(intersects) ? intersects - (64 - 26) : intersects - 96;
                 })
                 .Sum();
