@@ -20,7 +20,7 @@ namespace AdventOfCode2022.Day
             var result = File.ReadAllLines(_path)
                 .Select(x => GetScore(Translate(x[0]), Translate(x[2])))
                 .Sum();
-            Console.WriteLine($"Advent of Code Day 01 part 1 : {result}");
+            Console.WriteLine($"Advent of Code Day 02 part 1 : {result}");
         }
 
         public void PartTwo()
@@ -28,7 +28,7 @@ namespace AdventOfCode2022.Day
             var result = File.ReadAllLines(_path)
                 .Select(x => GetScore(Translate(x[0]), Translate2(x)))
                 .Sum();
-            Console.WriteLine($"Advent of Code Day 01 part 2 : {result}");
+            Console.WriteLine($"Advent of Code Day 02 part 2 : {result}");
         }
 
         private static int GetScore(Sign oponent, Sign us)
