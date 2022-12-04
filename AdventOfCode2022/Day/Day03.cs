@@ -35,7 +35,10 @@ namespace AdventOfCode2022.Day
                 .Chunk(3)
                 .Select(x =>
                 {
-                    var intersects = x[0].Intersect(x[1]).Intersect(x[2]).First();
+                    var intersects = x[0] 
+                        .Intersect(x[1]) // intersect first list with second, this produces an array of chars
+                        .Intersect(x[2]) // intersect that result with the third list
+                        .First();        // Take only first value
                     return Char.IsUpper(intersects) ? intersects - (64 - 26) : intersects - 96;
                 })
                 .Sum();
