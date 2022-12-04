@@ -17,56 +17,38 @@ namespace AdventOfCode2022.Day
         }
         public void PartOne()
         {
-            var lines = File.ReadAllLines(_path)
+            var result = File.ReadAllLines(_path)
                 .Select(x => x.Split(','))
-                .ToList();
-
-            int result = 0;
-            foreach (var item in lines)
-            {
-                var firstNum = item[0].Split('-').Select(x => int.Parse(x)).ToList();
-                var first = Enumerable.Range(firstNum[0], firstNum[1] - firstNum[0] + 1).ToList();
-                
-
-                var secondNum = item[1].Split('-').Select(x => int.Parse(x)).ToList();
-                var second = Enumerable.Range(secondNum[0], secondNum[1] - secondNum[0] + 1).ToList();
-
-                var intersects = first.Intersect(second).ToList();
-
-                if (intersects.Count == first.Count || intersects.Count == second.Count)
+                .Select(x =>
                 {
-                    result++;
-                }
-            }
-
+                    var first = GetRange(x[0]);
+                    var second = GetRange(x[1]);
+                    var intersects = first.Intersect(second).Count();
+                    return (intersects == first.Count || intersects == second.Count) ? 1 : 0;
+                })
+                .Sum();
             Console.WriteLine($"Advent of Code Day 04 part 1 : {result}");
         }
 
         public void PartTwo()
         {
-            var lines = File.ReadAllLines(_path)
+            var result = File.ReadAllLines(_path)
                 .Select(x => x.Split(','))
-                .ToList();
-
-            int result = 0;
-            foreach (var item in lines)
-            {
-                var firstNum = item[0].Split('-').Select(x => int.Parse(x)).ToList();
-                var first = Enumerable.Range(firstNum[0], firstNum[1] - firstNum[0] + 1).ToList();
-
-
-                var secondNum = item[1].Split('-').Select(x => int.Parse(x)).ToList();
-                var second = Enumerable.Range(secondNum[0], secondNum[1] - secondNum[0] + 1).ToList();
-
-                var intersects = first.Intersect(second).ToList();
-
-                if (intersects.Count > 0)
+                .Select(x =>
                 {
-                    result++;
-                }
-            }
-
+                    var first = GetRange(x[0]);
+                    var second = GetRange(x[1]);
+                    var intersects = first.Intersect(second).Count();
+                    return intersects > 0 ? 1 : 0;
+                })
+                .Sum();
             Console.WriteLine($"Advent of Code Day 04 part 2 : {result}");
+        }
+
+        private static List<int> GetRange(string x)
+        {
+            var numbers = x.Split('-').Select(x => int.Parse(x)).ToList();
+            return Enumerable.Range(numbers[0], numbers[1] - numbers[0] + 1).ToList();
         }
     }
 }
