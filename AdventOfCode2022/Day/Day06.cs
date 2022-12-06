@@ -17,14 +17,30 @@ namespace AdventOfCode2022.Day
         }
         public void PartOne()
         {
-            var result = File.ReadAllLines(_path); ;
+            var result = Solve(4);
             Console.WriteLine($"Advent of Code Day 06 part 1 : {result}");
         }
 
         public void PartTwo()
         {
-            var result = File.ReadAllLines(_path); ;
+            var result = Solve(14);
             Console.WriteLine($"Advent of Code Day 06 part 2 : {result}");
+        }
+
+        private int Solve(int distinctCharacters)
+        {
+            var lines = File.ReadAllText(_path);
+            var result = distinctCharacters;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                var count = lines[(i)..(i + distinctCharacters)].Distinct().Count();
+                if (count == distinctCharacters)
+                {
+                    result += i;
+                    break;
+                }
+            }
+            return result;
         }
     }
 }
