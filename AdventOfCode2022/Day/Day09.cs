@@ -25,9 +25,8 @@ namespace AdventOfCode2022.Day
             foreach (var line in lines)
             {
                 var split = line.Split(' ');
-                var dir = split[0];
                 var steps = int.Parse(split[1]);
-                var direction = GetDirection(dir);
+                var direction = GetDirection(line[0]);
 
                 for (int i = 1; i <= steps; i++)
                 {
@@ -60,9 +59,8 @@ namespace AdventOfCode2022.Day
             foreach (var line in lines)
             {
                 var split = line.Split(' ');
-                var dir = split[0];
                 var steps = int.Parse(split[1]);
-                var direction = GetDirection(dir);
+                var direction = GetDirection(line[0]);
 
                 for (int i = 0; i < steps; i++)
                 {
@@ -90,15 +88,15 @@ namespace AdventOfCode2022.Day
                 }
             }
             var result = visited.Distinct().Count();
-            Console.WriteLine($"Advent of Code Day 09 part 2 : {0}");
+            Console.WriteLine($"Advent of Code Day 09 part 2 : {result}");
         }
 
-        public static (int X, int Y) GetDirection(string direction) => direction switch
+        public static (int X, int Y) GetDirection(char direction) => direction switch
         {
-            "R" => (0, 1),
-            "L" => (0, -1),
-            "U" => (-1, 0),
-            "D" => (1, 0),
+            'R' => (0, 1),
+            'L' => (0, -1),
+            'U' => (-1, 0),
+            'D' => (1, 0),
             _ => throw new ArgumentOutOfRangeException(nameof(direction), $"Not expected direction value: {direction}"),
         };
     }
